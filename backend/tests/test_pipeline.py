@@ -1,30 +1,52 @@
+import os
 import pytest
-from fastapi.testclient import TestClient
-from src.main import app
+from src.triage.condition_inferer import ConditionInferer
+from src.retriever.hybrid_retriever import HybridRetriever
+from src.generator.answer_generator import AnswerGenerator
 
-client = TestClient(app)
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
 
-def test_valid_cardiac_input():
-    response = client.post(
-        "/query",
-        json={"user_input": "The patient is experiencing chest pain radiating to the left arm, shortness of breath, sweating, and dizziness."}
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert "Cardiac" in data["condition"]
-    assert "First Aid" in data["answer"] or "first aid" in data["answer"].lower()
+# Fixtures to initialize modules once
+@pytest.fixture(scope="module")
+def triage():
+    return ConditionInferer()
 
-def test_empty_input():
-    response = client.post("/query", json={"user_input": ""})
-    assert response.status_code == 200
-    data = response.json()
-    assert "need more detailed information" in data["condition"] or "provide specific symptoms" in data["condition"]
+@pytest.fixture(scope="module")
+def retriever():
+    return HybridRetriever()
 
-def test_unknown_symptom_input():
-    response = client.post(
-        "/query",
-        json={"user_input": "The patient reports yellow spots on the tongue and itchy ears."}
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert "Condition" in data["answer"] or len(data["answer"]) > 10  # Ensuring answer is generated
+@pytest.fixture(scope="module")
+def generator():
+    return AnswerGenerator()
+
+def test_condition_inference(triage):
+    symptoms = "Crushing chest pain shooting down my left arm"
+    condition = triage.infer(symptoms)
+    assert "Myocardial Infarction" in condition or "Heart Attack" in condition
+
+def test_retriever_returns_data(retriever):
+    query = "hypoglycemia symptoms shaking and sweating"
+    results = retriever.retrieve(query)
+    assert isinstance(results, list)
+    assert len(results) > 0
+
+def test_answer_generation(generator):
+    condition = "Hypoglycemia"
+    evidence = [
+        "Symptoms include sweating, shakiness, and low blood sugar.",
+        "Treatment involves providing fast-acting carbohydrates."
+    ]
+    answer = generator.generate_answer(condition, evidence)
+    assert "First aid steps" in answer or "first-aid steps" in answer
+    assert len(answer) < 1000  # check response is reasonable size
+
+def test_pipeline_end_to_end(triage, retriever, generator):
+    user_input = "My diabetic father just became unconscious; we think his sugar crashed."
+    condition = triage.infer(user_input)
+    evidence = retriever.retrieve(user_input)
+    answer = generator.generate_answer(condition, evidence)
+    assert condition != ""
+    assert len(evidence) > 0
+    assert "First aid" in answer or "first-aid" in answer
