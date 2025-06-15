@@ -15,7 +15,7 @@ A Retrieval-Augmented Generation (RAG) chatbot providing first-aid advice for **
 1. **Clone the Repository**:
 
    ```bash
-   git clone <[your-repo-url](https://github.com/maneesxh/RAG-FirstAid-Chatbot/edit/main/README.md)>
+   git clone <https://github.com/maneesxh/RAG-FirstAid-Chatbot/edit/main/README.md>
    cd RAG-FirstAid-Chatbot
    ```
 
