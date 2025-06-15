@@ -1,0 +1,55 @@
+# Performance Report
+
+**Project:** RAG-Powered First Aid Chatbot  
+**Domains:** Diabetes, Cardiac, Renal Emergencies
+
+## 1. Average Latency
+
+| Stage             | Description                            | Average Latency |
+| ----------------- | -------------------------------------- | --------------- |
+| Inference         | Condition prediction via OpenAI GPT-4o | ~2.5 - 4 sec    |
+| Retrieval         | Hybrid retrieval (local + Serper.dev)  | ~1.5 - 3 sec    |
+| Answer Generation | Final response generation              | ~3 - 5 sec      |
+| **Total**         | End-to-end user query response         | **~7 - 12 sec** |
+
+_Note:_ Latency depends on API network conditions.
+
+## 2. Token Usage Summary
+
+| Stage                    | Average Tokens Used |
+| ------------------------ | ------------------- |
+| Condition Inference      | ~150                |
+| Retrieval Fusion Context | ~300                |
+| Answer Generation Prompt | ~450                |
+| Output Tokens            | ~200                |
+| **Total per query**      | **~1100 tokens**    |
+
+_Cost-optimized by limiting evidence size & using gpt-4o._
+
+## 3. Accuracy Summary
+
+- **Conditions Covered:** Diabetes, Cardiac (Heart Attack, etc), Renal disorders
+- **Accuracy:** The model correctly identifies domain-specific conditions when provided with clear symptom descriptions.
+
+| Sample Query                             | Condition Prediction   | Notes   |
+| ---------------------------------------- | ---------------------- | ------- |
+| "Severe hypoglycemia, sweating, shaking" | Hypoglycemia           | Correct |
+| "Chest pain radiating to left arm"       | Myocardial Infarction  | Correct |
+| "Swelling feet, reduced urine output"    | Chronic Kidney Disease | Correct |
+
+## 4. Known Limitations
+
+- Model handles common emergency domains.
+- Performance may degrade for:
+  - Rare diseases not covered in knowledge base
+  - Ambiguous or vague symptom descriptions
+  - Non-English inputs (English-only scope)
+  - Ethical disclaimer: not a substitute for professional medical advice.
+
+## 5. Design Trade-offs
+
+- Hybrid RAG to balance cost & freshness.
+- ChromaDB for local retrieval.
+- Serper.dev for real-time freshness.
+- OpenAI GPT-4o for generation quality.
+- Max token budget limited to reduce cost while preserving answer depth.
