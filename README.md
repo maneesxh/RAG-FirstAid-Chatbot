@@ -77,3 +77,13 @@ Contributions are welcome! Please submit a pull request or open an issue for sug
 ## Author
 
 Maneesh – [LinkedIn](https://www.linkedin.com/in/maneeshthota/) | thotamaneesh@gmail.com
+
+## Images
+
+Below are screenshots of the chatbot's user interface and sample interactions:
+
+![Landing Page](images/Landing-Page.png)
+![Sample Query 1](images/Sample-Query-1.png)
+![Sample Query 2](images/Sample-Query-2.png)
+
+
