@@ -1,0 +1,36 @@
+.footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+}
+
+.icon-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+
+.icon-row a {
+  display: flex;
+  align-items: center;
+  color: #444;
+  text-decoration: none;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.icon-row a:hover {
+  transform: scale(1.1);
+  color: #000;
+}
+
+.signature {
+  font-size: 13px;
+  color: #777;
+  margin-top: 10px;
+}
