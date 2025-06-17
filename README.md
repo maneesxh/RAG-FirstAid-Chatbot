@@ -15,13 +15,14 @@ A Retrieval-Augmented Generation (RAG) chatbot providing first-aid advice for **
 1. **Clone the Repository**:
 
    ```bash
-   git clone <https://github.com/maneesxh/RAG-FirstAid-Chatbot/edit/main/README.md>
+   git clone https://github.com/maneesxh/RAG-FirstAid-Chatbot.git
    cd RAG-FirstAid-Chatbot
    ```
 
-2. **Install Dependencies**:
+2. **Install Backend Dependencies**:
 
    ```bash
+   cd backend
    pip install -r requirements.txt
    ```
 
@@ -40,21 +41,34 @@ A Retrieval-Augmented Generation (RAG) chatbot providing first-aid advice for **
    ```
 
 5. **Run Backend Server**:
+   Navigate to the backend folder and start the server:
 
    ```bash
    uvicorn src.main:app --reload
    ```
 
-6. **Run Tests** (optional):
+6. **Run Frontend**:
+   In a new terminal, navigate to the frontend folder and start the frontend:
+
+   ```bash
+   cd frontend
+   npm install
+   npm start
+   ```
+
+7. **Run Tests** (optional):
+   From the root directory, run the test suite:
+
    ```bash
    pytest tests/
    ```
 
 ## Usage
 
-- Access the API at `http://localhost:8000` after starting the server.
-- Input symptoms via the API to receive tailored first-aid advice.
-- Ensure API keys are valid for OpenAI and Serper.dev to enable retrieval and generation.
+- Access the backend API at `http://localhost:8000` after starting the server.
+- Access the frontend at `http://localhost:3000` (or the port specified by npm).
+- Input symptoms via the frontend or API to receive tailored first-aid advice.
+- Ensure API keys for OpenAI and Serper.dev are valid to enable retrieval and generation.
 
 ## Contributing
 
