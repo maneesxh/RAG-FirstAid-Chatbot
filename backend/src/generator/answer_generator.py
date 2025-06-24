@@ -1,13 +1,10 @@
-# src/answer_generator/answer_generator.py
-
 from openai import OpenAI
 import os
 
 class AnswerGenerator:
     def __init__(self):
         self.client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-        self.model = "gpt-4o"  # or gpt-4o-mini if you're cost-conscious
-
+        self.model = "gpt-4o"
     def generate_answer(self, condition, evidence):
         # Compose the structured prompt
         prompt = f"""
