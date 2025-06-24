@@ -20,7 +20,7 @@ class HybridRetriever:
         return results['documents'][0]
 
     def serper_search(self, query):
-        url = "https://google.serper.dev/search"  # <-- Correct endpoint
+        url = "https://google.serper.dev/search"  
         headers = {"X-API-KEY": self.serper_key}
         data = {"q": query}
 
